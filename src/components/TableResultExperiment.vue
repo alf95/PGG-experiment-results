@@ -3,10 +3,10 @@
       <h2>Payoffs PGG</h2>
       <form>
           <div class="form-row">
-              <div class="form-group col-4">
+              <!--<div class="form-group col-4">
                     <label for="my-input" class="col-form-label col-form-label-sm">Carica file in xlsx</label>
                     <input id="my-input" class="form-control-file" type="file" @change="readFile" @click="resetFile">
-              </div>
+              </div> -->
               <div class="form-group col-4">
                     <label for="nRound" class="col-form-label col-form-label-sm mr-3">Inserisci il round</label>
                     <input type="number" class="form-control-sm" placeholder="Current round" id="nRound" v-model="nRound" @change="showResults = false">
@@ -107,16 +107,34 @@ export default {
       playersDataMapOrdered:{},
       fileData: null,
       showResults:false,
-      nRound:null
+      nRound:null,
+      //linkFileXlsx: "https://docs.google.com/spreadsheets/d/e/2PACX-1vSllyawIzP5_Uri7zzh55lYv0AtXJ4UKzWdWxJMha9VRo0TvNqPpUOHee4pSrlnGg/pub?output=xlsx"
+      linkFileXlsx: "https://docs.google.com/spreadsheets/d/1rhQiHUfZZor7uMsSIHY80QOWZ_ehyBhg/export?format=xlsx&id=1rhQiHUfZZor7uMsSIHY80QOWZ_ehyBhg"
     };
   },
-  created() {},
+  mounted() {
+    this.readFileFromUrl();
+    let self = this;
+    setInterval(() => {
+      self.readFileFromUrl();
+    }, 10000);
+    
+    
+  },
   methods: {
-    readFile(event) {
-      this.showResults = false;
+    readFileFromUrl(){
       let self = this;
-      this.fileData = event.target.files[0];
-      let file = event.target.files[0];
+      fetch(this.linkFileXlsx, {cache:"no-cache"}).then(function(resp) {
+        // Process the data here...
+        console.log('Data Response: ', resp);
+        self.readFile(resp.blob());
+      });
+    },
+    readFile(file) {
+      //this.showResults = false;
+      let self = this;
+      //this.fileData = event.target.files[0];
+      //let file = event.target.files[0];
       console.log(file);
       readXlsxFile(file).then((rows) => {
         console.log(rows);
