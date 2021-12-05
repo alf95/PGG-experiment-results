@@ -1,4 +1,4 @@
-# table-experiment
+# PGG-experiment-results
 
 ## Project setup
 ```
