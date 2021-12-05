@@ -70,13 +70,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(infos, idPlayer) in playersDataMapOrdered" :key="idPlayer" v-show="idPlayer > 24">
+                        <tr v-for="(infos, idPlayer) in playersDataMapOrdered" :key="idPlayer" v-show="idPlayer > 24 && idPlayer <= 36">
                             <td class="idPlayer">{{"X" + idPlayer}}</td>
                             <td v-for="(value, colPayoff) in infos" :key="colPayoff" :class="colPayoff" v-show="colPayoff == 'Payoff ' + nRound">{{value}}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
+
+            <div class="col">
+              <table class="table table-striped table-responsive ">
+                  <thead>
+                      <tr>
+                          <th v-for="(value, colName) in columnsPositionMap" :key="value" v-show="colName == 'ID' || colName == 'Payoff ' + nRound">
+                              {{colName.replace("ID", "Player")}}
+                          </th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr v-for="(infos, idPlayer) in playersDataMapOrdered" :key="idPlayer" v-show="idPlayer > 36">
+                          <td class="idPlayer">{{"X" + idPlayer}}</td>
+                          <td v-for="(value, colPayoff) in infos" :key="colPayoff" :class="colPayoff" v-show="colPayoff == 'Payoff ' + nRound">{{value}}</td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
         </div>
         
 
